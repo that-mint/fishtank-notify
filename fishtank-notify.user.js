@@ -10,18 +10,19 @@
 (function() {
     'use strict';
 
-    const soundUrl = "https://github.com/that-mint/fishtank-notify/raw/main/audio.mp3";
+    const soundUrl = "https://freesound.org/data/previews/333/333329_5177663-lq.mp3";
     const audio = new Audio(soundUrl);
 
-    const targetNode = document.querySelector('html body div#__next main[class*=AppShell_app-shell__] div[class*=Chat_chat__]');
+    const targetNode = document.querySelector('html body div#__next main[class^="AppShell_app-shell"] div[class^="Chat_chat"]');
+
     const config = { attributes: false, childList: true, subtree: true };
     const observer = new MutationObserver(function(mutationsList, observer) {
         for(let mutation of mutationsList) {
             if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                const lastItem = targetNode.querySelector('div[class*=ChatLastItem_chat-last-item__]');
+                const lastItem = targetNode.querySelector('div[class^="ChatLastItem_chat-last-item"][class$="__*"]');
                 if (lastItem) {
-                    const ttsDiv = lastItem.querySelector('div[class*=ChatLastItem_tts__]');
-                    const textDiv = lastItem.querySelector('div[class*=ChatLastItem_text__]');
+                    const ttsDiv = lastItem.querySelector('div[class^="ChatLastItem_tts"][class$="__*"]');
+                    const textDiv = lastItem.querySelector('div[class^="ChatLastItem_text"][class$="__*"]');
                     if (ttsDiv && ttsDiv.textContent.trim() !== "") {
                         audio.play();
                         if (!document.hasFocus()) {
