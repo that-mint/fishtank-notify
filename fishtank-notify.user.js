@@ -10,7 +10,7 @@
 (function() {
     'use strict';
 
-    const soundUrl = "https://freesound.org/data/previews/333/333329_5177663-lq.mp3";
+    const soundUrl = "https://github.com/that-mint/fishtank-notify/raw/main/audio.mp3";
     const audio = new Audio(soundUrl);
 
     const targetNode = document.querySelector('html body div#__next main[class^="AppShell_app-shell"] div[class^="Chat_chat"]');
