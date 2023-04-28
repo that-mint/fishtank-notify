@@ -1,52 +1,50 @@
 // ==UserScript==
-// @name         Fishtank Chat Sound
-// @namespace    https://www.fishtank.live/
+// @name         Fishtank Chat Sound with Tab Title Change
+// @namespace    none
 // @version      1
-// @description  Play sound and change window title when Fishtank chat changes
+// @description  Plays a sound when a new message is received in Fishtank chat and changes the title of the tab when the tab is not focused
 // @match        https://www.fishtank.live/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
-    const soundUrl = "https://github.com/that-mint/fishtank-notify/blob/d17f5ce719e2bfea428d595d69c9d38a9bb1a543/audio.mp3"; // replace with your sound URL
 
-    const observeTarget = document.querySelector("html body div#__next main.AppShell_app-shell__:regex(class, AppShell_app-shell__[A-Za-z0-9]{5}) div.Chat_chat__:regex(class, Chat_chat__[A-Za-z0-9]{5}) div.ChatLastItem_chat-last-item__:regex(class, ChatLastItem_chat-last-item__[A-Za-z0-9]{5}) div.ChatLastItem_text__:regex(class, ChatLastItem_text__[A-Za-z0-9]{5}) div.ChatLastItem_tts__:regex(class, ChatLastItem_tts__[A-Za-z0-9]{5})");
+    const soundUrl = "https://github.com/that-mint/fishtank-notify/raw/main/audio.mp3";
+    const audio = new Audio(soundUrl);
 
-    const observer = new MutationObserver((mutationsList) => {
-        let titleChanged = false;
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                playSound();
-                if (!titleChanged) {
-                    changeTitle();
-                    titleChanged = true;
+    const targetNode = document.querySelector('html body div#__next main[class*=AppShell_app-shell__] div[class*=Chat_chat__]');
+    const config = { attributes: false, childList: true, subtree: true };
+    const observer = new MutationObserver(function(mutationsList, observer) {
+        for(let mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                const lastItem = targetNode.querySelector('div[class*=ChatLastItem_chat-last-item__]');
+                if (lastItem) {
+                    const ttsDiv = lastItem.querySelector('div[class*=ChatLastItem_tts__]');
+                    const textDiv = lastItem.querySelector('div[class*=ChatLastItem_text__]');
+                    if (ttsDiv && ttsDiv.textContent.trim() !== "") {
+                        audio.play();
+                        if (!document.hasFocus()) {
+                            document.title = "!!Fishtank!!";
+                        }
+                    } else if (textDiv && textDiv.textContent.trim() !== "") {
+                        audio.play();
+                        if (!document.hasFocus()) {
+                            document.title = "!!Fishtank!!";
+                        }
+                    }
                 }
             }
         }
     });
 
-    observer.observe(observeTarget, { childList: true });
+    observer.observe(targetNode, config);
 
-    function playSound() {
-        const audio = new Audio(soundUrl);
-        audio.play();
-    }
-
-    let originalTitle = document.title;
-    let isTabFocused = true;
-
-    window.addEventListener('focus', () => {
-        isTabFocused = true;
-        document.title = originalTitle;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hasFocus()) {
+            document.title = "Fishtank";
+        } else {
+            document.title = "!!Fishtank!!";
+        }
     });
-
-    window.addEventListener('blur', () => {
-        isTabFocused = false;
-    });
-
-    function changeTitle() {
-        if (isTabFocused) return;
-        document.title = "!!Fishtank!!";
-    }
 })();
