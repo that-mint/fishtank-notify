@@ -9,7 +9,7 @@
 
 (function() {
     'use strict';
-    const soundUrl = "https://freesound.org/data/previews/316/316903_5473258-lq.mp3"; // replace with your sound URL
+    const soundUrl = "https://github.com/that-mint/fishtank-notify/blob/d17f5ce719e2bfea428d595d69c9d38a9bb1a543/audio.mp3"; // replace with your sound URL
 
     const observeTarget = document.querySelector("html body div#__next main.AppShell_app-shell__:regex(class, AppShell_app-shell__[A-Za-z0-9]{5}) div.Chat_chat__:regex(class, Chat_chat__[A-Za-z0-9]{5}) div.ChatLastItem_chat-last-item__:regex(class, ChatLastItem_chat-last-item__[A-Za-z0-9]{5}) div.ChatLastItem_text__:regex(class, ChatLastItem_text__[A-Za-z0-9]{5}) div.ChatLastItem_tts__:regex(class, ChatLastItem_tts__[A-Za-z0-9]{5})");
 
