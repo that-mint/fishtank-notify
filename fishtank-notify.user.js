@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FishTank Live Notification Sound
-// @version      1
+// @version      0.01
 // @description  Plays a sound when the FishTank Live notification element changes and displays a volume icon to control the sound volume
 // @match        https://www.fishtank.live/*
 // ==/UserScript==
