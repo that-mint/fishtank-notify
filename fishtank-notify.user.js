@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         fishtank-notify
 // @version      0.02
+// @author       that-mint
 // @description  Fishtank QoL script
 // @match        https://www.fishtank.live/*
 // ==/UserScript==
