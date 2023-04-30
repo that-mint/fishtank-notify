@@ -1,51 +1,75 @@
 // ==UserScript==
-// @name         Fishtank Chat Sound with Tab Title Change
-// @namespace    none
+// @name         FishTank Live Notification Sound
 // @version      1
-// @description  Plays a sound when a new message is received in Fishtank chat and changes the title of the tab when the tab is not focused
+// @description  Plays a sound when the FishTank Live notification element changes and displays a volume icon to control the sound volume
 // @match        https://www.fishtank.live/*
-// @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    const soundUrl = "https://github.com/that-mint/fishtank-notify/raw/main/audio.mp3";
-    const audio = new Audio(soundUrl);
+    // Import Font Awesome
+    const fontAwesomeLink = document.createElement('link');
+    fontAwesomeLink.rel = 'stylesheet';
+    fontAwesomeLink.href = 'https://use.fontawesome.com/releases/v5.15.3/css/all.css';
+    document.head.appendChild(fontAwesomeLink);
 
-    const targetNode = document.querySelector('html body div#__next main[class^="AppShell_app-shell"] div[class^="Chat_chat"]');
+    // Create the volume icon element
+    const volumeIcon = document.createElement('i');
+    volumeIcon.classList.add('fas', 'fa-volume-up');
+    volumeIcon.style.position = 'fixed';
+    volumeIcon.style.bottom = '20px';
+    volumeIcon.style.right = '20px';
+    volumeIcon.style.fontSize = '30px';
+    volumeIcon.style.cursor = 'pointer';
+    document.body.appendChild(volumeIcon);
 
-    const config = { attributes: false, childList: true, subtree: true };
-    const observer = new MutationObserver(function(mutationsList, observer) {
-        for(let mutation of mutationsList) {
-            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                const lastItem = targetNode.querySelector('div[class^="ChatLastItem_chat-last-item"][class$="__*"]');
-                if (lastItem) {
-                    const ttsDiv = lastItem.querySelector('div[class^="ChatLastItem_tts"][class$="__*"]');
-                    const textDiv = lastItem.querySelector('div[class^="ChatLastItem_text"][class$="__*"]');
-                    if (ttsDiv && ttsDiv.textContent.trim() !== "") {
-                        audio.play();
-                        if (!document.hasFocus()) {
-                            document.title = "!!Fishtank!!";
-                        }
-                    } else if (textDiv && textDiv.textContent.trim() !== "") {
-                        audio.play();
-                        if (!document.hasFocus()) {
-                            document.title = "!!Fishtank!!";
-                        }
-                    }
+    // Create the volume bar element
+    const volumeBar = document.createElement('input');
+    volumeBar.type = 'range';
+    volumeBar.min = '0';
+    volumeBar.max = '1';
+    volumeBar.step = '0.01';
+    volumeBar.value = '0.5';
+    volumeBar.style.position = 'fixed';
+    volumeBar.style.bottom = '60px';
+    volumeBar.style.right = '20px';
+    volumeBar.style.width = '150px';
+    volumeBar.style.display = 'none';
+    document.body.appendChild(volumeBar);
+
+    // Create the audio element
+    const audio = new Audio('https://github.com/that-mint/that-mint.github.io/blob/29002a62d49be1b0097be9eb491b22c7845bdbde/audio.mp3?raw=true'); // Replace with the URL of your audio file
+    audio.volume = volumeBar.value;
+
+    // Listen for volume icon click events
+    volumeIcon.addEventListener('click', () => {
+        volumeBar.style.display = volumeBar.style.display === 'none' ? 'block' : 'none';
+    });
+
+
+    // Remove frank hassle goal
+
+    const chatHassleDivSelector = "html body div#__next main.AppShell_app-shell__slfko div.Chat_chat__Bdojy div.Chat_hassle__rwI57";
+
+    const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                const chatHassleDiv = document.querySelector(chatHassleDivSelector);
+                if (chatHassleDiv) {
+                    chatHassleDiv.remove();
+                    observer.disconnect();
+                }
+                // Remove rainbow merch button background
+                const buttonSelector = ".Button_button__WqJhY.Button_small__1CiMC.AdditionalLinksPanel_merch__aAQ9W";
+                const button = document.querySelector(buttonSelector);
+                if (button) {
+                    button.classList.remove("AdditionalLinksPanel_merch__aAQ9W");
+                    button.classList.add("Button_button__WqJhY", "Button_small__1CiMC");
                 }
             }
         }
     });
 
-    observer.observe(targetNode, config);
-
-    document.addEventListener('visibilitychange', function() {
-        if (document.hasFocus()) {
-            document.title = "Fishtank";
-        } else {
-            document.title = "!!Fishtank!!";
-        }
-    });
+    observer.observe(document.body, { childList: true, subtree: true });
 })();
