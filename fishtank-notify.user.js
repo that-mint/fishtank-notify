@@ -51,6 +51,7 @@
     // Remove frank hassle goal
 
     const chatHassleDivSelector = "html body div#__next main.AppShell_app-shell__slfko div.Chat_chat__Bdojy div.Chat_hassle__rwI57";
+    const chatUnsubbedMsgSelector = "html body div#__next main.AppShell_app-shell__slfko div.Chat_chat__Bdojy form#chat-input.ChatInput_chat-input__2fQUr input"
 
     const observer = new MutationObserver((mutationsList) => {
         for (const mutation of mutationsList) {
@@ -58,6 +59,12 @@
                 const chatHassleDiv = document.querySelector(chatHassleDivSelector);
                 if (chatHassleDiv) {
                     chatHassleDiv.remove();
+                    observer.disconnect();
+                }
+                // Remove no season pass message
+                const chatUnsubbedMsg = document.querySelector(chatUnsubbedMsgSelector);
+                if (chatUnsubbedMsg) {
+                    chatUnsubbedMsg.remove();
                     observer.disconnect();
                 }
                 // Remove rainbow merch button background
