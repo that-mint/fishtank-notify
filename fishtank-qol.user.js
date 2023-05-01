@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         fishtank-notify
+// @name         fishtank-qol
 // @version      0.02
 // @author       that-mint
 // @description  Fishtank QoL script
@@ -52,7 +52,7 @@
 
 
     const chatHassleDivSelector = "html body div#__next main.AppShell_app-shell__slfko div.Chat_chat__Bdojy div.Chat_hassle__rwI57";
-
+   
     const observer = new MutationObserver((mutationsList) => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
