@@ -1,4 +1,4 @@
-# fishtank-notify
+# fishtank-qol
 
   Features: 
 
