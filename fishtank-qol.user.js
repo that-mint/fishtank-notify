@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         fishtank-qol
-// @version      0.02
+// @version      0.03
 // @author       that-mint
 // @description  Fishtank QoL script
 // @match        https://www.fishtank.live/*
@@ -9,7 +9,7 @@
 (function() {
     'use strict';
 
-    const chatHassleDivSelector = "html body div#__next main.AppShell_app-shell__slfko div.Chat_chat__Bdojy div.Chat_hassle__rwI57";
+    const chatHassleDivSelector = "html body div#__next main.AppShell_app-shell__slfko div.Chat_chat__Bdojy div.HassleMeter_hassle__CBUEz";
    
     const observer = new MutationObserver((mutationsList) => {
         for (const mutation of mutationsList) {
