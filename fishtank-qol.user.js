@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         fishtank-qol
-// @version      0.04
+// @version      0.05
 // @author       that-mint
 // @description  Fishtank QoL script
 // @match        https://www.fishtank.live/*
-// @downloadURL  https://github.com/that-mint/fishtank-qol/raw/main/fishtank-qol.user.js
+// @downloadURL  https://github.com/that-mint/fishtank-qol/raw/main/fishtank-qol.user.js 
+// @icon         https://pbs.twimg.com/profile_images/1647770068749516802/8i6HgC65_200x200.jpg
+// @homepageURL  https://github.com/that-mint/fishtank-qol
 // ==/UserScript==
 
 (function() {
